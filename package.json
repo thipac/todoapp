@@ -1,0 +1,27 @@
+{
+  "name": "todoapp",
+  "version": "1.0.0",
+  "description": "Modulo 4 ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./todoapp/src/server.js",
+    "start": "node ./todoapp/src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thipac/todoapp.git"
+  },
+  "author": "Thiago",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thipac/todoapp/issues"
+  },
+  "homepage": "https://github.com/thipac/todoapp#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.9"
+  }
+}
