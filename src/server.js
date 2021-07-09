@@ -6,6 +6,8 @@ const tarefasController = require('./controllers/tarefas-control');
 const usuarioController = require('./controllers/usuario-control');
 
 
+app.use(express.json())
+
 
 inicioApp(app);
 usuarioController(app);
