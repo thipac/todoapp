@@ -1,11 +1,51 @@
-const usuarioController = (app) => {
-    app.get('/usuarios', (req, resp) => {
-        resp.send(`Rota ativada com GET e recurso usuario:
-        valores de tarefas devem ser retornados`)
-    })
-    app.post('/usuarios',(req,res)=>{
-        res.send('Rota POST de usuario ativada: usuário adicionado ao banco de dados!')
-    })
-}
+const User =  require('../models/UserModel')
 
-module.exports = usuarioController
+module.exports = (app,db) => {
+    app.get('/users', (req, res) =>{
+        res.json({
+        result:db.users,
+        count:db.users.length
+        })
+    })
+
+    app.get('/users/:email', (req,res) =>{
+        let arrayResposta = db.users.filter((element) => {
+            return element.email === req.params.email 
+            })
+          res.jason({
+              result:arrayResposta,
+              count: arrayResposta.length
+          })  
+    })
+
+    app.post('/users', (req,res) => {
+        const {nome, email, senha} = req.body
+
+        let newUser  =  new User(nome, email, senha)
+        db.users.push(newUser)
+        res.json({
+            message: 'Usuario criado com susesso'
+        })
+    })
+
+    app.delete('/users/:email',(req,res)=>{
+        let countArray = db.users.length
+        db.users = db.users.filter((element) => {
+            return element.email !== req.params.email
+        })
+        if(countArray === db.users.length ){
+            res.json({
+                message:`não existe usuario com esse email ${req.params.email}`,
+                error: true
+            })
+        }
+        else{
+            res.json({
+                message:`Usuario com o email: ${req.params.email} deletado com sucesso`,
+                error: false
+            })
+        }
+        
+    })
+    
+}

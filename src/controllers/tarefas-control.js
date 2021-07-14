@@ -1,11 +1,20 @@
-const tarefasController = (app) => {
-    app.get('/tarefas', (req, resp) => {
-        resp.send(`Rota ativada com GET e recurso tarefas:
-        valores de tarefas devem ser retornados`)
+const Tasks = require('../models/TaskModel')
+
+module.exports = (app,db) =>{
+    app.get('/tasks',(req,res)=>{
+        res.json({
+            result:db.tasks,
+            count:db.tasks.length
+        })
     })
-    app.post('/tarefas',(req,res)=>{
-        res.send('Rota POST de Tarefas ativada: Tarefa adicionada ao banco de dados!')
+
+    app.post('/tasks',(req,res)=>{
+        const {titulo,data,status,descricao} = req.body
+        let newTasks =  new Tasks(titulo,data,status,descricao)
+        db.tasks.push(newTasks)
+        res.json({
+            message:'Tarefa criada com sucesso',
+            error:false
+        })
     })
 }
-
-module.exports = tarefasController
